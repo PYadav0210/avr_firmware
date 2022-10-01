@@ -12,7 +12,15 @@
 
 int main (void)
 {
-	DDRD = 0xFF;
+	PORTD = 1<<2;
+	DDRD = 1<<2;
+	while(1)
+	{
+		PORTD =~PORTD;
+		_delay_ms(1000);
+	
+	}
+		
 	
 }
 
