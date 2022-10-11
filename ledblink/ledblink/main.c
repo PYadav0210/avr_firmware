@@ -12,20 +12,39 @@
 
 int main (void)
 {
-	PORTD = 1<<2;
-	DDRD = 1<<2;
+     
+     sei(); //enable interuupt
+	 EIMSK=1<<INT0;
+	 EICRA=1<<0|0<<1;
+	 DDRD = 1<<4|1<<5|1<<6;
 	while(1)
 	{
-		PORTD =~PORTD;
-		_delay_ms(1000);
+		_delay_ms(500);
+		PORTD = 1<<4;
+		_delay_ms(500);
+		PORTD = 1<<5;
+		_delay_ms(500);
+		PORTD = 1<<6;
+		
+	
 	
 	}
 		
 	
 }
 
-ISR(XXX_vect)
+ISR(INT0_vect)
 {
-	
+	int i=0;   
+	while (i<3)
+	{
+		PORTD=1<<4|1<<5|1<<6;
+		_delay_ms(500);
+		PORTD=0;
+		_delay_ms(1000);
+		i++;
+		
+	}
+	cli();
 }
 
