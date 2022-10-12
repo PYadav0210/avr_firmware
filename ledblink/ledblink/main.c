@@ -13,38 +13,27 @@
 int main (void)
 {
      
-     sei(); //enable interuupt
-	 EIMSK=1<<INT0;
-	 EICRA=1<<0|0<<1;
-	 DDRD = 1<<4|1<<5|1<<6;
+    
+	 TIMSK1=1<<TCNT1;
+	 TCCR1B=1<<CS02|0<<CS01|1<<CS00;
+	 
+	   
+	 DDRD = 1<<5;
+	
 	while(1)
 	{
-		_delay_ms(500);
-		PORTD = 1<<4;
-		_delay_ms(500);
-		PORTD = 1<<5;
-		_delay_ms(500);
-		PORTD = 1<<6;
-		
-	
+	 sei(); //enable interrupt
+
 	
 	}
 		
 	
 }
 
-ISR(INT0_vect)
+ISR(TIMER1_OVF_vect)
 {
-	int i=0;   
-	while (i<3)
-	{
-		PORTD=1<<4|1<<5|1<<6;
-		_delay_ms(500);
-		PORTD=0;
-		_delay_ms(1000);
-		i++;
-		
-	}
+	
+	PORTD=~PORTD;
 	cli();
 }
 
